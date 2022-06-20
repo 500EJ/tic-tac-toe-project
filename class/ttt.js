@@ -28,11 +28,55 @@ class TTT {
     console.log("TEST COMMAND");
   }
 
+  static _horizontalWin(grid) {
+    if (grid.some(row => row.every(char => char === "X"))) {
+      return "X";
+    } else if (grid.some(row => row.every(char => char === "O"))) {
+      return "O";
+    }
+  }
+
+  static _verticalWin(grid) {
+    const cols = [];
+    for (let i = 0; i < grid.length; i++) {
+      const col = [];
+      for (let j = 0; j < grid.length; j++) {
+        col.push(grid[j][i]);
+      }
+      cols.push(col);
+    }
+    return TTT._horizontalWin(cols);
+  }
+
+  static _diagonalWin(grid) {
+    if (
+      grid[0][0] === grid[1][1] &&
+      grid[1][1] === grid[2][2] &&
+      grid[0][0] !== " "
+    ) {
+      return grid[0][0];
+    }
+    if (
+      grid[0][2] === grid[1][1] &&
+      grid[1][1] === grid[2][0] &&
+      grid[0][2] !== " "
+    ) {
+      return grid[0][2];
+    }
+  }
+
+  static _tie(grid) {
+    if (grid.every(row => row.every(char => char !== " "))) return "T";
+  }
+
   static checkWin(grid) {
-    // Return 'X' if player X wins
-    // Return 'O' if player O wins
-    // Return 'T' if the game is a tie
-    // Return false if the game has not ended
+    return (
+      TTT._horizontalWin(grid) ||
+      TTT._verticalWin(grid) ||
+      TTT._diagonalWin(grid) ||
+      TTT._tie(grid) ||
+      false
+    );
   }
 
   static endGame(winner) {
