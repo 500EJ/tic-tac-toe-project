@@ -21,19 +21,39 @@ class Cursor {
   }
 
   up() {
-    if (this.row > 0) this.row--;
+    if (this.row > 0) {
+      this.resetBackgroundColor();
+      this.row--;
+      this.setBackgroundColor();
+      Screen.render();
+    }
   }
 
   down() {
-    if (this.row < this.numRows - 1) this.row++;
+    if (this.row < this.numRows - 1) {
+      this.resetBackgroundColor();
+      this.row++;
+      this.setBackgroundColor();
+      Screen.render();
+    }
   }
 
   left() {
-    if (this.col > 0) this.col--;
+    if (this.col > 0) {
+      this.resetBackgroundColor();
+      this.col--;
+      this.setBackgroundColor();
+      Screen.render();
+    }
   }
 
   right() {
-    if (this.col < this.numCols - 1) this.col++;
+    if (this.col < this.numCols - 1) {
+      this.resetBackgroundColor();
+      this.col++;
+      this.setBackgroundColor();
+      Screen.render();
+    }
   }
 }
 

@@ -3,7 +3,7 @@ const Cursor = require("./cursor");
 
 class TTT {
   constructor() {
-    this.playerTurn = "O";
+    this.playerTurn = "X";
 
     this.grid = [
       [" ", " ", " "],
@@ -16,16 +16,32 @@ class TTT {
     // Initialize a 3x3 tic-tac-toe grid
     Screen.initialize(3, 3);
     Screen.setGridlines(true);
+    this.cursor.setBackgroundColor();
 
-    // Replace this with real commands
-    Screen.addCommand("t", "test command (remove)", TTT.testCommand);
+    Screen.addCommand("up", "move up", () => {
+      this.cursor.up();
+    });
+    Screen.addCommand("down", "move down", () => {
+      this.cursor.down();
+    });
+    Screen.addCommand("left", "move left", () => {
+      this.cursor.left();
+    });
+    Screen.addCommand("right", "move right", () => {
+      this.cursor.right();
+    });
+    Screen.addCommand("space", "place move", () => {
+      Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+      this.grid[this.cursor.row][this.cursor.col] = this.playerTurn;
+      const winner = TTT.checkWin(this.grid);
+      this.playerTurn === "X"
+        ? (this.playerTurn = "O")
+        : (this.playerTurn = "X");
+      Screen.render();
+      if (winner) TTT.endGame(winner);
+    });
 
     Screen.render();
-  }
-
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
   }
 
   static _horizontalWin(grid) {
